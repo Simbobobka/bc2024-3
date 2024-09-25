@@ -1,7 +1,6 @@
 const { program } = require('commander');
 const fs = require('fs');
 
-// Функція для читання вхідного файлу
 function readInputFile(filePath) {
     if (!fs.existsSync(filePath)) {
         console.error("Cannot find input file");
@@ -12,13 +11,12 @@ function readInputFile(filePath) {
     return JSON.parse(data);
 }
 
-// Функція для запису у файл
 function writeOutputFile(filePath, data) {
     fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
     console.log(`Result written to ${filePath}`);
 }
 
-// Налаштування аргументів командного рядка
+
 program
     .requiredOption('-i, --input <path>', 'Path to input JSON file')
     .option('-o, --output <path>', 'Path to output file')
@@ -28,23 +26,27 @@ program.parse(process.argv);
 
 const options = program.opts();
 
-// Перевірка, чи існує вхідний файл
+
 if (!fs.existsSync(options.input)) {
     console.error("Cannot find input file");
     process.exit(1);
 }
 
-// Читання вхідного файлу
+function formatBondData(bond) {
+    return `${bond.StockCode}-${bond.ValCode}-${bond.Attraction}`;
+}
+
 const inputData = readInputFile(options.input);
 
+const formattedResults = inputData.map(formatBondData).join('\n');
 // Виведення в консоль, якщо задано параметр -d
 if (options.display) {
-    console.log("Data:", inputData);
+    console.log(formattedResults);
 }
 
 // Запис у файл, якщо задано параметр -o
 if (options.output) {
-    writeOutputFile(options.output, inputData);
+    writeOutputFile(options.output, formattedResults);
 }
 
 // Якщо не задано жодного з параметрів -o або -d, програма не повинна виводити нічого
