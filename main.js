@@ -12,7 +12,7 @@ function readInputFile(filePath) {
 }
 
 function writeOutputFile(filePath, data) {
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
+    fs.writeFileSync(filePath, data, 'utf8');
     console.log(`Result written to ${filePath}`);
 }
 
