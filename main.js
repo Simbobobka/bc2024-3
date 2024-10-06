@@ -26,6 +26,10 @@ program.parse(process.argv);
 
 const options = program.opts();
 
+if (!options.input) {
+    console.error('Please, specify input file');
+    process.exit(1);
+}
 
 if (!fs.existsSync(options.input)) {
     console.error("Cannot find input file");
