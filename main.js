@@ -18,7 +18,7 @@ function writeOutputFile(filePath, data) {
 
 
 program
-    .requiredOption('-i, --input <path>', 'Path to input JSON file')
+    .option('-i, --input <path>', 'Path to input JSON file')
     .option('-o, --output <path>', 'Path to output file')
     .option('-d, --display', 'Display result in console');
 
